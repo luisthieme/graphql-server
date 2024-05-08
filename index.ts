@@ -1,10 +1,25 @@
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
 import { typeDefs } from "./schema";
+import db from "./_db";
+
+const resolvers = {
+  Query: {
+    games() {
+      return db.games;
+    },
+    reviews() {
+      return db.reviews;
+    },
+    authors() {
+      return db.authors;
+    },
+  },
+};
 
 const server = new ApolloServer({
   typeDefs,
-  // https://www.youtube.com/watch?v=mjqfYgFyziU&list=PL4cUxeGkcC9gUxtblNUahcsg0WLxmrK_y&index=5
+  resolvers,
 });
 
 const PORT = 4000;
